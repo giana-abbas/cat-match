@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 29b07138d5278b24cb829d56a36255bb
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - spriteRenderer: {instanceID: 0}
+  - cardFace: {fileID: 21300000, guid: 5baa7938b5334bb4aa3d2030c60b6fe9, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
