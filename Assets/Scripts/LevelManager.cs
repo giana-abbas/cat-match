@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     public Card card2;
     public int numFlippedCards = 0;
     private bool matching = false;
+    private bool matchWait = false;
 
     public Sprite[] cardTypeList;
     private static int pairAmount = 3;
@@ -58,7 +59,7 @@ public class LevelManager : MonoBehaviour
                     matching = true;
                     Debug.Log("flipped over first card");
                 }
-                else if (matching)
+                else if (matching && !matchWait)
                 {
                     if (card == card1)
                     {
@@ -68,34 +69,42 @@ public class LevelManager : MonoBehaviour
                     }
                     else
                     {
+                        matchWait = true;
                         card2 = card;
                         card.FlipCard();
                         Debug.Log("flipped over second card! must compare...");
-                        // TODO: wait before flipping
-                        bool match = compareCards(card1, card2);
-                        if (match)
-                        {
-                            card1.active = false;
-                            card2.active = false;
-                        }
-                        else
-                        {
-                            card1.FlipCard();
-                            card2.FlipCard();
-                        }
-                        matching = false;
+
+                        StartCoroutine(Match(card1, card2));
                     }
                 }
             }
-
-
-            if (numFlippedCards == pairAmount * 2)
-            {
-                Debug.Log("All cards flipped");
-                // TODO: u won !!
-            }
         }
 
+    }
+
+    // waits for 1 second
+    private IEnumerator Match(Card card1, Card card2)
+    {
+        bool match = compareCards(card1, card2);
+        if (match)
+        {
+            card1.active = false;
+            card2.active = false;
+        }
+        else
+        {
+            yield return new WaitForSeconds(1.0f);
+            card1.FlipCard();
+            card2.FlipCard();
+        }
+        matching = false;
+        matchWait = false;
+
+        if (numFlippedCards == pairAmount * 2)
+        {
+            Debug.Log("All cards flipped");
+            // TODO: u won !!
+        }
     }
 
     // method shuffles all of the available card types for a level
