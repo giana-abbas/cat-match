@@ -8,7 +8,10 @@ public class LevelManager : MonoBehaviour
     Ray ray;
     RaycastHit hit;
     public Card card;
+    public Card card1;
+    public Card card2;
     public int numFlippedCards = 0;
+    private bool matching = false;
 
     public Sprite[] cardTypeList;
     private static int pairAmount = 3;
@@ -45,11 +48,51 @@ public class LevelManager : MonoBehaviour
         if (Physics.Raycast(ray, out hit) && (Input.GetMouseButtonUp(0)))
         {
             card = hit.transform.gameObject.GetComponent<Card>();
-            Debug.Log("CLICKED", card);
-            card.FlipCard();
+
+            if (card.active)
+            {
+                if (!matching)
+                {
+                    card1 = card;
+                    card.FlipCard();
+                    matching = true;
+                    Debug.Log("flipped over first card");
+                }
+                else if (matching)
+                {
+                    if (card == card1)
+                    {
+                        card.FlipCard();
+                        matching = false;
+                        Debug.Log("flipped over og card");
+                    }
+                    else
+                    {
+                        card2 = card;
+                        card.FlipCard();
+                        Debug.Log("flipped over second card! must compare...");
+                        // TODO: wait before flipping
+                        bool match = compareCards(card1, card2);
+                        if (match)
+                        {
+                            card1.active = false;
+                            card2.active = false;
+                        }
+                        else
+                        {
+                            card1.FlipCard();
+                            card2.FlipCard();
+                        }
+                        matching = false;
+                    }
+                }
+            }
+
+
             if (numFlippedCards == pairAmount * 2)
             {
                 Debug.Log("All cards flipped");
+                // TODO: u won !!
             }
         }
 
@@ -90,6 +133,23 @@ public class LevelManager : MonoBehaviour
         Sprite nextSprite = cardsList[cardAssignIndex];
         cardAssignIndex++;
         return nextSprite;
+    }
+
+    // compares two card faces
+    private bool compareCards(Card card1, Card card2)
+    {
+        bool match;
+
+        if (card1.cardFace == card2.cardFace)
+        {
+            match = true;
+        }
+        else
+        {
+            match = false;
+        }
+
+        return match;
     }
 
     // prints an array

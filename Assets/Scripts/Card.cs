@@ -11,12 +11,14 @@ public class Card : MonoBehaviour
     public Sprite cardBack;
 
     private bool faceUp;
+    public bool active;
     float cardScale = 2f;
 
     // Start is called before the first frame update
     void Start()
     {
         faceUp = false;
+        active = true;
         cardFace = levelManager.assignCard();
     }
 
@@ -29,14 +31,14 @@ public class Card : MonoBehaviour
     // flip cards
     public void FlipCard()
     {
-        if (faceUp == false)
+        if (!faceUp)
         {
             spriteRenderer.sprite = cardFace;
             spriteRenderer.size = new Vector3(cardScale, cardScale, 1);
             levelManager.numFlippedCards++;
             faceUp = true;
         }
-        else if (faceUp == true)
+        else if (faceUp)
         {
             spriteRenderer.sprite = cardBack;
             spriteRenderer.size = new Vector3(cardScale, cardScale, 1);
