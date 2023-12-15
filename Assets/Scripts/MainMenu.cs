@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public GameObject catBook;
     public MainMenu mainMenu;
-    
+
     public void PlayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -23,9 +23,8 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("ESC");
-            if (catBook.activeInHierarchy==true) 
-            {  
+            if (catBook.activeInHierarchy == true)
+            {
                 catBook.gameObject.SetActive(false);
                 mainMenu.gameObject.SetActive(true);
             }

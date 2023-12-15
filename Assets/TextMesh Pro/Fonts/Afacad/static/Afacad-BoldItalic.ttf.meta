@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: c445525e7a26e9c4a814e9df0bae73e0
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Afacad
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 532c2def8a4ac3744b0029b700773adb, type: 3}
+  - {fileID: 12800000, guid: d3b7a23957385bb47a4fddfcbaeceb43, type: 3}
+  - {fileID: 12800000, guid: 01653b45b2ebfd24e8a98f9477b92080, type: 3}
+  - {fileID: 12800000, guid: 23b9bb39e80c7d44cb7d6271fc6e7d8f, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
