@@ -4,16 +4,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
-{    
+{
+    Ray ray;
+    RaycastHit hit;
+    public Card card;
     public int numFlippedCards = 0;
 
     public Sprite[] cardTypeList;
     private static int pairAmount = 3;
     public Sprite[] cardsList = new Sprite[pairAmount * 2];
-       
+
     private int cardAssignIndex = 0;
 
-    
 
 
     void Awake()
@@ -26,19 +28,29 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (numFlippedCards == pairAmount * 2) {
-            //Debug.Log("All cards flipped");
-        }
-        
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("MainMenu");
+        }
+
+        // check if cards clicked
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit) && (Input.GetMouseButtonUp(0)))
+        {
+            card = hit.transform.gameObject.GetComponent<Card>();
+            Debug.Log("CLICKED", card);
+            card.FlipCard();
+            if (numFlippedCards == pairAmount * 2)
+            {
+                Debug.Log("All cards flipped");
+            }
         }
 
     }
@@ -46,24 +58,26 @@ public class LevelManager : MonoBehaviour
     // method shuffles all of the available card types for a level
     private void shuffle(Sprite[] array)
     {
-        int n = array.Length;  
-        while (n > 1) {  
-            n--;  
-            int k = Random.Range(0, n + 1);  
-            Sprite value = array[k];  
-            array[k] = array[n];  
-            array[n] = value;  
+        int n = array.Length;
+        while (n > 1)
+        {
+            n--;
+            int k = Random.Range(0, n + 1);
+            Sprite value = array[k];
+            array[k] = array[n];
+            array[n] = value;
         }
     }
 
 
     // method creates shuffled array of card types that will be used in the level
-    private void instantiateCardList() 
+    private void instantiateCardList()
     {
         int j = 0;
-        for (int i = 0; i < pairAmount*2; i = i + 2) {
+        for (int i = 0; i < pairAmount * 2; i = i + 2)
+        {
             cardsList[i] = cardTypeList[j];
-            cardsList[i+1] = cardTypeList[j];
+            cardsList[i + 1] = cardTypeList[j];
             j++;
         }
         shuffle(cardsList);
@@ -71,7 +85,8 @@ public class LevelManager : MonoBehaviour
 
 
     // method returns a card type from cardsList and increments the cardAssignIndex
-    public Sprite assignCard() {
+    public Sprite assignCard()
+    {
         Sprite nextSprite = cardsList[cardAssignIndex];
         cardAssignIndex++;
         return nextSprite;
@@ -80,7 +95,7 @@ public class LevelManager : MonoBehaviour
     // prints an array
     private void debugPrintArray(Sprite[] array)
     {
-        for(int i = 0; i < array.Length; i++)
+        for (int i = 0; i < array.Length; i++)
         {
             Debug.Log(array[i]);
         }
