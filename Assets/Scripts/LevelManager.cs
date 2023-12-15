@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     Ray ray;
     RaycastHit hit;
+    public GameObject gameMenu;
     public Card card;
     public Card card1;
     public Card card2;
@@ -39,9 +40,10 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && gameMenu.activeInHierarchy == false)
         {
-            SceneManager.LoadScene("MainMenu");
+            //set game menu to active
+            gameMenu.gameObject.SetActive(true);
         }
 
         // check if cards clicked
