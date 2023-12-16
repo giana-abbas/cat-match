@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
     Ray ray;
     RaycastHit hit;
     public GameObject gameMenu;
+    public GameObject winMenu;
     public Card card;
     public Card card1;
     public Card card2;
@@ -40,7 +41,7 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Escape) && gameMenu.activeInHierarchy == false)
+        if (Input.GetKeyDown(KeyCode.Escape) && winMenu.activeInHierarchy == false)
         {
             //set game menu to active
             gameMenu.gameObject.SetActive(true);
@@ -59,7 +60,6 @@ public class LevelManager : MonoBehaviour
                     card1 = card;
                     card.FlipCard();
                     matching = true;
-                    Debug.Log("flipped over first card");
                 }
                 else if (matching && !matchWait)
                 {
@@ -67,14 +67,12 @@ public class LevelManager : MonoBehaviour
                     {
                         card.FlipCard();
                         matching = false;
-                        Debug.Log("flipped over og card");
                     }
                     else
                     {
                         matchWait = true;
                         card2 = card;
                         card.FlipCard();
-                        Debug.Log("flipped over second card! must compare...");
 
                         StartCoroutine(Match(card1, card2));
                     }
@@ -105,7 +103,7 @@ public class LevelManager : MonoBehaviour
         if (numFlippedCards == pairAmount * 2)
         {
             Debug.Log("All cards flipped");
-            // TODO: u won !!
+            winMenu.gameObject.SetActive(true);
         }
     }
 

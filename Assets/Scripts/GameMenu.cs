@@ -6,10 +6,16 @@ using UnityEngine.SceneManagement;
 public class GameMenu : MonoBehaviour
 {
     public GameObject gameMenu;
+    public GameObject winMenu;
 
     public void ResumeGame()
     {
         gameMenu.gameObject.SetActive(false);
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void ReturnMenu()
@@ -27,7 +33,7 @@ public class GameMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (gameMenu.activeInHierarchy == true)
+            if (gameMenu.activeInHierarchy == true && winMenu.activeInHierarchy == false)
             {
                 gameMenu.gameObject.SetActive(false);
             }
